@@ -35,11 +35,12 @@ header p {
 }
 
 fieldset {
+  width: 100%;
+  overflow: hidden; /* Keeps everything inside the rounded borders */
   border: 1px solid #e2e8f0;
   border-radius: 12px;
+  padding: 20px;
   margin-bottom: 30px;
-  padding: 25px;
-  background-color: #ffffff;
 }
 
 legend {
