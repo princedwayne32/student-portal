@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '', middleName: '', lastName: '', suffix: '', religion: '',
     email: '', mobile: '', landline: '',
@@ -25,20 +26,17 @@ function App() {
     }
   };
 
-  // STRICT FILTER: Letters and spaces only
   const handleString = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value.replace(/[^A-Za-z\s]/g, "") });
   };
 
-  // STRICT FILTER: Numbers only with length limit
   const handleNumeric = (e, limit) => {
     const { name, value } = e.target;
     const digits = value.replace(/\D/g, "");
     if (digits.length <= limit) setFormData({ ...formData, [name]: digits });
   };
 
-  // STRICT FILTER: GPA (Max 5.0)
   const handleGPA = (e) => {
     const val = e.target.value;
     if (val === '' || (parseFloat(val) <= 5 && val.length <= 4)) {
@@ -46,15 +44,32 @@ function App() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="container success-container fade-in">
+        <div className="success-card">
+          <div className="check-icon">✓</div>
+          <h2>You have finished submitting!</h2>
+          <p>Your enrollment details have been sent to the ADEi University Registrar.</p>
+          <button className="submit-btn" onClick={() => setIsSubmitted(false)}>Register Another Student</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container">
+    <div className="container fade-in">
       <header>
         <h2>ADEi University Digital Registrar</h2>
-        <p>Student Enrollment Portal</p>
+        <p>Official Enrollment Portal</p>
       </header>
 
-      <form onSubmit={(e) => e.preventDefault()}>
-        {/* PERSONAL INFORMATION */}
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <legend>Personal Information</legend>
           <div className="grid-4">
@@ -65,29 +80,18 @@ function App() {
           </div>
           <div className="grid-3">
             <label>Date of Birth <input type="date" required onKeyDown={(e) => e.preventDefault()} /></label>
-            <label>Gender
-              <select required>
-                <option value="">Select...</option>
-                <option>Male</option><option>Female</option><option>Non-binary</option>
-              </select>
-            </label>
-            <label>Nationality
-              <select required>
-                <option value="">Select...</option>
-                <option>Filipino</option><option>Foreign National</option>
-              </select>
-            </label>
+            <label>Gender <select required><option value="">Select...</option><option>Male</option><option>Female</option><option>Non-binary</option></select></label>
+            <label>Nationality <select required><option value="">Select...</option><option>Filipino</option><option>Foreign National</option></select></label>
           </div>
           <label>Religion <input type="text" name="religion" value={formData.religion} onChange={handleString} required /></label>
         </fieldset>
 
-        {/* CONTACT DETAILS */}
         <fieldset>
           <legend>Contact Details</legend>
           <div className="grid-3">
             <label>Email <input type="email" required /></label>
             <label>Mobile (11 Digits) <input type="text" name="mobile" value={formData.mobile} onChange={(e) => handleNumeric(e, 11)} required /></label>
-            <label>Landline (10 Digits) <input type="text" name="landline" value={formData.landline} onChange={(e) => handleNumeric(e, 10)} /></label>
+            <label>Landline (8 Digits) <input type="text" name="landline" value={formData.landline} onChange={(e) => handleNumeric(e, 8)} /></label>
           </div>
           <div className="grid-3">
             <label>Street <input type="text" required /></label>
@@ -100,49 +104,45 @@ function App() {
           </div>
         </fieldset>
 
-        {/* ACADEMIC HISTORY */}
         <fieldset>
           <legend>Academic History</legend>
-          <div className="academic-block">
-            <h4>Grade School</h4>
-            <div className="grid-3">
-              <label>School Name <input type="text" name="gsName" value={formData.gsName} onChange={handleString} required /></label>
-              <label>Year Graduated <input type="text" name="gsYear" value={formData.gsYear} onChange={(e) => handleNumeric(e, 4)} required /></label>
-              <label>Address <input type="text" required /></label>
-            </div>
-            <h4>Junior High School</h4>
-            <div className="grid-3">
-              <label>School Name <input type="text" name="jhsName" value={formData.jhsName} onChange={handleString} required /></label>
-              <label>Year Graduated <input type="text" name="jhsYear" value={formData.jhsYear} onChange={(e) => handleNumeric(e, 4)} required /></label>
-              <label>Address <input type="text" required /></label>
-            </div>
-            <h4>Senior High School</h4>
-            <div className="grid-4">
-              <label>School Name <input type="text" name="shsName" value={formData.shsName} onChange={handleString} required /></label>
-              <label>Year Graduated <input type="text" name="shsYear" value={formData.shsYear} onChange={(e) => handleNumeric(e, 4)} required /></label>
-              <label>Grade Average <input type="number" step="0.01" value={formData.shsAverage} onChange={handleGPA} required /></label>
-              <label>Address <input type="text" required /></label>
-            </div>
+          <h4>Grade School</h4>
+          <div className="grid-3">
+            <label>School Name <input type="text" name="gsName" value={formData.gsName} onChange={handleString} required /></label>
+            <label>Year <input type="text" name="gsYear" value={formData.gsYear} onChange={(e) => handleNumeric(e, 4)} required /></label>
+            <label>Address <input type="text" required /></label>
+          </div>
+          <h4>Junior High School</h4>
+          <div className="grid-3">
+            <label>School Name <input type="text" name="jhsName" value={formData.jhsName} onChange={handleString} required /></label>
+            <label>Year <input type="text" name="jhsYear" value={formData.jhsYear} onChange={(e) => handleNumeric(e, 4)} required /></label>
+            <label>Address <input type="text" required /></label>
+          </div>
+          <h4>Senior High School</h4>
+          <div className="grid-4">
+            <label>School Name <input type="text" name="shsName" value={formData.shsName} onChange={handleString} required /></label>
+            <label>Year <input type="text" name="shsYear" value={formData.shsYear} onChange={(e) => handleNumeric(e, 4)} required /></label>
+            <label>GPA (Max 5.0) <input type="number" step="0.01" value={formData.shsAverage} onChange={handleGPA} required /></label>
+            <label>Address <input type="text" required /></label>
           </div>
         </fieldset>
 
-        {/* ENROLLMENT CHOICES */}
         <fieldset>
           <legend>Enrollment Choices</legend>
           <div className="choice-row">
             <div className="radio-box">
               <p>Academic Level:</p>
-              <label><input type="radio" name="level" value="Undergraduate" onChange={(e) => setFormData({...formData, academicLevel: e.target.value, deptOrType: '', degree: ''})} /> Undergraduate</label>
+              <label><input type="radio" name="level" value="Undergraduate" onChange={(e) => setFormData({...formData, academicLevel: e.target.value, deptOrType: '', degree: ''})} required /> Undergraduate</label>
               <label><input type="radio" name="level" value="Graduate" onChange={(e) => setFormData({...formData, academicLevel: e.target.value, deptOrType: '', degree: ''})} /> Graduate</label>
             </div>
             <div className="radio-box">
               <p>Semester:</p>
-              <label><input type="radio" name="sem" /> 1st Sem</label>
+              <label><input type="radio" name="sem" required /> 1st Sem</label>
               <label><input type="radio" name="sem" /> 2nd Sem</label>
             </div>
             <div className="radio-box">
               <p>Campus:</p>
-              <label><input type="radio" name="campus" /> Manila</label>
+              <label><input type="radio" name="campus" required /> Manila</label>
               <label><input type="radio" name="campus" /> Quezon City</label>
             </div>
           </div>

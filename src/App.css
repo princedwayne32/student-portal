@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* FIXED: Universal box-sizing ensures padding doesn't break the layout */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { background-color: #f1f5f9; color: #334155; font-family: 'Inter', sans-serif; padding: 20px; }
@@ -16,14 +15,7 @@ body { background-color: #f1f5f9; color: #334155; font-family: 'Inter', sans-ser
 
 header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; }
 
-fieldset {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 25px;
-  margin-bottom: 25px;
-  width: 100%; /* Keeps everything inside */
-}
-
+fieldset { border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 25px; width: 100%; }
 legend { color: #6366f1; font-weight: 600; padding: 0 10px; font-size: 0.85rem; text-transform: uppercase; }
 
 h4 { font-size: 0.9rem; color: #475569; margin: 15px 0 10px 0; border-left: 3px solid #6366f1; padding-left: 10px; }
@@ -31,18 +23,12 @@ h4 { font-size: 0.9rem; color: #475569; margin: 15px 0 10px 0; border-left: 3px 
 label { display: flex; flex-direction: column; font-size: 0.8rem; font-weight: 500; margin-bottom: 15px; }
 
 input, select {
-  padding: 12px;
-  margin-top: 6px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 8px;
-  background-color: #f8fafc;
-  transition: all 0.2s;
+  padding: 12px; margin-top: 6px; border: 1.5px solid #e2e8f0; border-radius: 8px;
+  background-color: #f8fafc; transition: all 0.2s;
 }
 
 input:focus, select:focus {
-  outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  outline: none; border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
@@ -50,19 +36,20 @@ input:focus, select:focus {
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
 .choice-row { display: flex; flex-wrap: wrap; gap: 30px; background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-
 .radio-box p { font-weight: 600; font-size: 0.8rem; margin-bottom: 8px; }
 .radio-box label { flex-direction: row; align-items: center; gap: 8px; margin: 0; cursor: pointer; }
 
+/* Success State Styling */
+.success-container { text-align: center; display: flex; align-items: center; justify-content: center; min-height: 400px; }
+.success-card { max-width: 500px; }
+.check-icon {
+  width: 80px; height: 80px; background: #10b981; color: white;
+  font-size: 40px; line-height: 80px; border-radius: 50%; margin: 0 auto 20px;
+}
+
 .submit-btn {
-  width: 100%;
-  padding: 16px;
-  background-color: #6366f1;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
+  width: 100%; padding: 16px; background-color: #6366f1; color: white;
+  border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 20px;
 }
 
 .fade-in { animation: fadeIn 0.4s ease-in; }
